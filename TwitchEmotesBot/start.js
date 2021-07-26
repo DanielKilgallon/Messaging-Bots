@@ -1,7 +1,6 @@
 'use strict';
-const fs = require('fs');
 const request = require('request');
-const Telegraf = require('telegraf');
+const { Telegraf } = require('telegraf');
 
 const botkeys = require('../botkeys.json');
 const bot = new Telegraf(botkeys.TwitchBotKey, {username: 'TwitchEmotesBot'});
@@ -31,11 +30,33 @@ bot.on('text', ctx => {
     var emote = emotes[message];
     if (emote) {
       var emote_image = emote_image_url + emote.id + "/3.0";
-	  console.log(ctx.message.from.username + " said " + message);
+	    console.log(ctx.message.from.username + " said " + message);
       ctx.replyWithPhoto(emote_image).catch(error => { console.log('caught error for ' + message + "." +  emote_image); });
     }
   }
 });
 
 console.log("Starting Twitch Bot...");
-bot.startPolling();
+bot.launch();
+
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+readline.on('SIGINT', () => {
+  readline.close();
+  process.exit(0);
+});
+
+readline.on('line', (input) => {
+  if (input.trim().toUpperCase() == "STOP") {
+	  console.log("Stopping polling");
+	  bot.stop();
+  } else if (input.trim().toUpperCase() == "START") {
+	  console.log("Starting polling");
+	  bot.launch();
+  } else {
+	   console.log(`Received: ${input}`);
+  }
+});

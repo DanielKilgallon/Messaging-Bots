@@ -4,17 +4,13 @@ This is a repository for my Telegram Bots, written in Javascript and run using N
 
 ### Getting Started
 
-You will need [Node.js](https://nodejs.org/) to run the Javscript backend on your local machine.
+You will need a [Telegram](https://telegram.org/) account and [Node.js](https://nodejs.org/) to run this project.
 
 ### Installing
 
-You can download or clone this repository to run the files. Do not only download the .js files, as there are .json files for storing information.
+Download or clone this repository then navigate to this folder and run `npm install` to install dependencies. From there you will need your own Bot and Bot Keys from Telegram, please follow this guide to create your bot and get the required key [Telegram Bot-Making Guide](https://core.telegram.org/bots)
 
-After downloading, use npm to install Telegraf `npm install telegraf`. You should be ready to run the the .js files in this repository. Run using `node file.js`.
-
-## Deployment
-
-To fully run this on your own telegram bot, follow the [Telegram Bot-Making Guide](https://core.telegram.org/bots) and use the given api key in place of `botkeys['BotName']` in the code.
+Once you have acquired your bot key replace `botkeys['BotName']` with the api key. Then run the startup script `./startAllBots`
 
 ## Built With
 
@@ -22,11 +18,8 @@ To fully run this on your own telegram bot, follow the [Telegram Bot-Making Guid
 * [Telegraf API](https://github.com/telegraf/telegraf) - Bot framework for easier managing of bots
 * [Node.js](https://nodejs.org/) - Runs Javascript backend
 
-## Authors
+## Authors And Contributors
 
 * **Daniel Kilgallon** - *Creator and Maintainer*
-
-## Acknowledgments
-
 * [Ethan Barlow](https://ethanbarlow.github.io/) for giving me the idea of a telegram twitch bot.
 
