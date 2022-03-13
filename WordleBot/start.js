@@ -5,7 +5,8 @@ const { Telegraf } = require('telegraf')
 
 const botkeys = require('../botkeys.json');
 const bot = new Telegraf(botkeys.WordleFriendBot, { username: 'WordleFriendBot' });
-const words = fs.readFileSync('WordleBot/5-letter-words.txt', 'UTF-8').split(/\r?\n/);
+const word_guesses = fs.readFileSync('WordleBot/5-letter-words.txt', 'UTF-8').split(/\r?\n/);
+const word_solutions = fs.readFileSync('WordleBot/5-letter-solutions.txt', 'UTF-8').split(/\r?\n/);
 let playerMap = new Map();
 let restartBool = true;
 
@@ -50,7 +51,7 @@ bot.on('text', (ctx) => {
         const tries = playerArr[0];
         const playerTrueWord = playerArr[1];
         const playerWord = ctx.message.text.toLowerCase();
-        if (playerWord.length === 5 && words.includes(playerWord)) {
+        if (playerWord.length === 5 && word_guesses.includes(playerWord)) {
             playerMap.set(ctx.message.chat.id, [tries - 1, playerTrueWord]);
             if (playerWord === playerTrueWord) {
                 playerMap.set(ctx.message.chat.id, [0, playerTrueWord]);
@@ -101,15 +102,16 @@ rl.on('line', function (line) {
                 bot.telegram.sendMessage(playerMessageArray[player], message);
             }
         }
-    } else {
+    } else if (line.split(' ')[0] === ('messageall')) {
+        const message = line.substring(11).trim();
         for (const player in playerMessageArray) {
-            bot.telegram.sendMessage(playerMessageArray[player], line);
+            bot.telegram.sendMessage(playerMessageArray[player], message);
         }
     }
 });
 
 function setCurrentWord() {
-    return words[Math.floor(Math.random() * words.length)];
+    return word_solutions[Math.floor(Math.random() * word_solutions.length)];
 }
 
 function makeNewGame(ctx) {
